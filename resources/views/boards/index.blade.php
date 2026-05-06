@@ -20,6 +20,16 @@
         <p>{{ $board->body }}</p>
         <small>投稿者: {{ $board->user->name }}</small>
         <small>{{ $board->created_at->diffForHumans() }}</small>
+        @can('update', $board)
+            <a href="{{ route('boards.edit', $board) }}">編集</a>
+        @endcan
+        @can('delete', $board)
+            <form action="{{ route('boards.destroy', $board) }}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="submit">削除</button>
+            </form>
+        @endcan
     @endforeach
 </body>
 </html>
