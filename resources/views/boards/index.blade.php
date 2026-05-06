@@ -31,5 +31,7 @@
             </form>
         @endcan
     @endforeach
+
+    {{ $boards->links() }}
 </body>
 </html>
