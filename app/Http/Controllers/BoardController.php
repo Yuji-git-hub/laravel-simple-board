@@ -18,7 +18,7 @@ class BoardController extends Controller
      */
     public function index(): View
     {
-        $boards = Board::with('user')->latest()->get();
+        $boards = Board::with('user')->latest()->simplePaginate(10)->withQueryString();
 
         return view('boards.index', ['boards' => $boards]);
     }
