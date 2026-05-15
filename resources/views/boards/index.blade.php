@@ -15,6 +15,27 @@
         {{ session('success')}}
     @endif
 
+    <form action="{{ route('boards.index') }}" method="get">
+        <div>
+            <label for="title">タイトル: </label>
+            <input type="text" name="keyword" value="{{ request('keyword') }}">
+        </div>
+        <div>
+            <label for="body">コメント: </label>
+            <input type="text" name="body" value="{{ request('body') }}">
+        </div>
+        <button type="submit">検索</button>
+    </form>
+
+    <form action="{{ route('boards.index') }}" method="get">
+        <button type="submit">リセット</button>
+    </form>
+
+    <form action="{{ route('boards.index') }}" method="get">
+        <input type="text" name="name" value="{{ request('name') }}">
+        <button type="submit">投稿者検索</button>
+    </form>
+
     @foreach($boards as $board)
         <h2>タイトル: {{ $board->title }}</h2>
         <p>{{ $board->body }}</p>
