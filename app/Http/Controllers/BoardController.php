@@ -6,6 +6,7 @@ use App\Http\Requests\BoardRequest;
 use App\Models\Board;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -16,9 +17,29 @@ class BoardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $boards = Board::with('user')->latest()->simplePaginate(10)->withQueryString();
+        $query = Board::with('user');
+
+        if($request->filled('keyword') || $request->filled('body')) {
+            $query->where(function ($q) use ($request) {
+                if($request->filled('keyword')) {
+                    $q->where('title', 'like', '%' . $request->keyword . '%');
+                }
+
+                if($request->filled('body')) {
+                    $q->orWhere('body', 'like', '%' . $request->body . '%');
+                }
+            });
+        }
+
+        if($request->filled('name')) {
+                $query->whereHas('user', function ($q) use ($request) {
+                    $q->where('name', 'like', '%' . $request->name . '%');
+            });
+        }
+
+        $boards = $query->simplePaginate(10)->withQueryString();
 
         return view('boards.index', ['boards' => $boards]);
     }
