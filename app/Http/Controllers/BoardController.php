@@ -70,9 +70,9 @@ class BoardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Board $board)
+    public function show(Board $board): View
     {
-        //
+        return view('boards.show', ['board' => $board]);
     }
 
     /**
