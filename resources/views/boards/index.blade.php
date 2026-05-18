@@ -12,7 +12,7 @@
     @endauth
 
     @if(session('success'))
-        {{ session('success')}}
+        {{ session('success') }}
     @endif
 
     <form action="{{ route('boards.index') }}" method="get">
@@ -37,7 +37,11 @@
     </form>
 
     @foreach($boards as $board)
-        <h2>タイトル: {{ $board->title }}</h2>
+        <h2>
+            <a href="{{ route('boards.show', $board) }}">
+                タイトル: {{ $board->title }}
+            </a>
+        </h2>
         <p>{{ $board->body }}</p>
         <small>投稿者: {{ $board->user->name }}</small>
         <small>{{ $board->created_at->diffForHumans() }}</small>
