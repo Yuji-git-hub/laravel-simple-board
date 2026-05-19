@@ -39,6 +39,12 @@ class BoardController extends Controller
             });
         }
 
+        if($request->sort === 'old') {
+            $query->oldest();
+        } else {
+            $query->latest();
+        }
+
         $boards = $query->simplePaginate(10)->withQueryString();
 
         return view('boards.index', ['boards' => $boards]);
