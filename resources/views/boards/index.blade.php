@@ -36,6 +36,22 @@
         <button type="submit">投稿者検索</button>
     </form>
 
+    <form action="{{ route('boards.index') }}" method="get">
+        <select name="sort">
+            <option value="latest"
+                {{ request('sort') === 'latest' ? 'selected' : '' }}>
+                新しい順
+            </option>
+
+            <option value="old"
+                {{ request('sort') === 'old' ? 'selected' : '' }}>
+                古い順
+            </option>
+        </select>
+
+        <button type="submit">並び替え</button>
+    </form>
+
     @foreach($boards as $board)
         <h2>
             <a href="{{ route('boards.show', $board) }}">
